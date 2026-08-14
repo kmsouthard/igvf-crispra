@@ -32,15 +32,50 @@ profile, not an aggregate across guides.
 
 ### Upstream (not in this repository)
 
-Libraries were aligned with **Cell Ranger v7.1.0** against **GRCh38-2020-A**. Guides were called
-using a 5-UMI threshold, and droplet occupancy was estimated from the number of detected guides.
-Expression values were normalized for droplet occupancy and transcript capture efficiency, then
-z-scored relative to singlet non-targeting control cells. Perturbation effect scores are deviations
-from control in units of standard deviation, inferred by multiple linear regression with
-Benjamini–Hochberg correction. Full methods are in the manuscript supplementary materials.
+Produced by **[norman-lab-msk/TFs_CRISPRa](https://github.com/norman-lab-msk/TFs_CRISPRa)** —
+see `Code/Processing CRISPRa experiments and performing regressions/`, in particular *Step 3 —
+Regressions and identifying masked_active guides for Hs27 experiment*. That repository, and the
+paper's Methods section, are authoritative for everything in this subsection.
 
-The result of that work is `fibroblast_CRISPRa_mean_pop.h5ad`, whose `X` holds effect scores and
-whose `p` and `adj_p` layers hold the corresponding p-values.
+Libraries were aligned with **Cell Ranger v7.1.0** against **GRCh38-2020-A**, and guides called at a
+5-UMI threshold.
+
+**Normalization** (`offset_p_normalize`, restricted to stably captured genes, `mean > 0.2`) runs
+per gem group:
+
+1. Counts are converted to per-cell transcript probabilities by dividing by each cell's UMI total.
+2. Droplet occupancy is corrected by stratifying cells on `number_of_cells` per droplet and
+   computing the average probability per occupancy class using a **2 %-trimmed mean**, then dividing
+   each cell by its class scale factor.
+3. Values are rescaled by `pairwise_singlet_equivalent_UMI_count` to adjust transcript capture.
+4. The **mean of control cells in the same gem group** is subtracted.
+5. The result is divided by the **standard deviation of control cells in the same gem group**.
+
+Centering and scaling are therefore both done against controls *within each gem group*, not against
+a single pooled control distribution. This is what puts effect scores in units of control standard
+deviation before any regression is fitted.
+
+**Regression** is ordinary least squares (`scipy.linalg.lstsq`) of that standardized matrix on the
+guide design matrix. The reported effect score is the OLS **coefficient**. P-values come from a
+two-sided *t*-test on `coef / SE` with `df = n − rank`, and Benjamini–Hochberg correction across
+genes produces the adjusted values.
+
+**Active-guide calls** are made on **target-masked** coefficients: each guide's own target gene
+column is set to `NaN` so that on-target activation cannot drive the call. Guides are then clustered
+on `1 − pairwise correlation` of those masked profiles with average-linkage hierarchical clustering,
+cut by the inconsistency criterion. A guide is `masked_active` when its cluster contains **two or
+more sgRNAs against the same gene** — reproducibility across independent guides, not effect size.
+`expanded_masked_active` is a disjoint rescue set from revisiting the clustering at threshold 1.2,
+keeping good, non-sequence-driven guides whose target gene no cluster had yet recovered.
+
+The result is `fibroblast_CRISPRa_mean_pop.h5ad` (10,916 guides × 4,914 genes), whose `X` holds
+effect scores and whose `p`, `adj_p` and `masked` layers hold p-values, adjusted p-values and the
+target-masked coefficients.
+
+> **This pipeline reads `X`, not `masked`.** Effect scores in the output are the unmasked
+> coefficients, so a guide's own target gene appears with its real on-target effect. The masking
+> exists only to make the *activity classification* independent of on-target signal. Comparing these
+> effect scores to the clustering in the paper without knowing that will mislead.
 
 > Note the Cell Ranger version: this screen used **7.1.0 / GRCh38-2020-A**, which differs from the
 > lab's dual-guide fibroblast work (9.0.1 / GRCh38-2024-A). Do not carry one version across to the
@@ -53,6 +88,18 @@ whose `p` and `adj_p` layers hold the corresponding p-values.
 1. **Join guide activity metadata.** Table S4 (`Guide Activity`) is joined onto `adata.obs` by
    `guide_identity`, supplying `seed_driven_fibro`, `bad_seed`, `active_fibro`,
    `expanded_active_fibro` and `de_genes_fibro`.
+
+   These are the published names for the upstream flags, and they do **not** all correspond
+   one-to-one with the `obs` columns already in the h5ad. Verified against this h5ad:
+
+   | Table S4 column | h5ad `obs` column | Relationship |
+   |---|---|---|
+   | `active_fibro` (659 true) | `masked_active` (661 true) | identical on all 10,707 joined guides |
+   | `expanded_active_fibro` (106 true) | not in h5ad | disjoint from `active_fibro`, zero overlap |
+   | `seed_driven_fibro` (1,038 true) | `sequence_driven` (1,083 true) | **differ on 454 guides — not interchangeable** |
+
+   209 of the 10,916 guides in the h5ad have no Table S4 row. They join as `NaN` and are dropped by
+   the boolean hit filter, so they can never reach the output.
 
 2. **Select hit guides.**
 
@@ -73,8 +120,10 @@ whose `p` and `adj_p` layers hold the corresponding p-values.
 
 | Stage | Count |
 |---|---|
-| Guides in Table S4 | 10,708 |
-| Hit guides after seed / activity filter | 626 |
+| Guides in the mean-pop h5ad | 10,916 |
+| Of those, present in Table S4 | 10,707 |
+| `active_fibro` / `expanded_active_fibro` (disjoint) | 659 / 106 |
+| Hit guides after seed / bad-seed filter | 626 |
 | Hit guides matched to a promoter window | 626 (none lost) |
 | Distinct promoter elements | 313 |
 | Elements present in output | 307 |
