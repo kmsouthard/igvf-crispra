@@ -98,8 +98,10 @@ target-masked coefficients.
    | `expanded_active_fibro` (106 true) | not in h5ad | disjoint from `active_fibro`, zero overlap |
    | `seed_driven_fibro` (1,038 true) | `sequence_driven` (1,083 true) | **differ on 454 guides — not interchangeable** |
 
-   209 of the 10,916 guides in the h5ad have no Table S4 row. They join as `NaN` and are dropped by
-   the boolean hit filter, so they can never reach the output.
+   Table S4 covers 10,707 of the 10,916 guides in the h5ad. The remaining 209 are outside the
+   classified set by design — 17 `off-target` controls, plus 192 guides (six each) against 32 TF
+   genes that were not carried into the activity table. They join as `NaN` and are excluded by the
+   hit filter, which is the intended behaviour.
 
 2. **Select hit guides.**
 
@@ -121,7 +123,7 @@ target-masked coefficients.
 | Stage | Count |
 |---|---|
 | Guides in the mean-pop h5ad | 10,916 |
-| Of those, present in Table S4 | 10,707 |
+| Classified in Table S4 (rest are controls / unclassified targets) | 10,707 |
 | `active_fibro` / `expanded_active_fibro` (disjoint) | 659 / 106 |
 | Hit guides after seed / bad-seed filter | 626 |
 | Hit guides matched to a promoter window | 626 (none lost) |
