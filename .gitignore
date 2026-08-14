@@ -1,0 +1,20 @@
+# Large inputs — see README for provenance, paths and checksums.
+# hit_guides_by_genes.tsv is 275 MB and exceeds GitHub's 100 MB hard limit.
+hit_guides_by_genes.tsv
+
+# Manuscript supplementary material — required input, distributed with the paper,
+# not redistributed here. Table S4 "Guide Activity" is the sheet this pipeline reads.
+Supplementary_Table1.xlsx
+
+# Single-cell matrices are never committed.
+*.h5ad
+*.h5
+*.hdf
+*.loom
+
+# Notebook and Python noise
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+.DS_Store
+._*
