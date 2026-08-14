@@ -73,19 +73,6 @@ coefficients.
 4. **Emit long-form results** — effect scores and both p-value layers melted to one row per
    element × gene, symbols mapped to unversioned Ensembl IDs, filtered to `p_val_adj < 0.05`.
 
-Table S4's published names do not all map one-to-one onto the h5ad `obs` columns. Verified against
-this h5ad:
-
-| Table S4 column | h5ad `obs` column | Relationship |
-|---|---|---|
-| `active_fibro` (659 true) | `masked_active` (661 true) | identical on all 10,707 classified guides |
-| `expanded_active_fibro` (106 true) | not in h5ad | disjoint from `active_fibro`, zero overlap |
-| `seed_driven_fibro` (1,038 true) | `sequence_driven` (1,083 true) | **differ on 454 guides — not interchangeable** |
-
-Table S4 classifies 10,707 of the 10,916 guides. The other 209 — 17 `off-target` controls plus 192
-guides (six each) against 32 TF genes not carried into the activity table — sit outside the
-classified set by design and are excluded by the hit filter.
-
 ### Cohort sizes, run of record
 
 | Stage | Count |
