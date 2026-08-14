@@ -4,7 +4,8 @@ import argparse
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument('--h5ad', default='/data1/normantm/datasets/Hs27_CRISPRa/fibroblast_CRISPRa_mean_pop.h5ad')
+    # Download from Zenodo: https://doi.org/10.5281/zenodo.15200179
+    p.add_argument('--h5ad', default='fibroblast_CRISPRa_mean_pop.h5ad')
     p.add_argument('--guide_meta', default='Supplementary_Table1.xlsx')
     p.add_argument('--guide_coords', default='merged_guides_promoters_UPSTREAM_PRIORITIZED.csv')
     p.add_argument('--padj_thresh', type=float, default=0.05)

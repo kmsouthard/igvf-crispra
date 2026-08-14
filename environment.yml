@@ -1,0 +1,16 @@
+# Minimal conda environment for generate_element_level_results.py.
+# Rename freely: `conda env create -f environment.yml -n <whatever>`.
+name: igvf-crispra
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.13
+  - scanpy>=1.10
+  - pandas>=2.0
+  - openpyxl>=3.1
+  # pulled in transitively, pinned here only to record what was tested
+  - anndata>=0.11
+  - numpy>=2.0
+  - scipy>=1.14
+  - h5py>=3.12

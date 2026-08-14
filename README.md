@@ -60,9 +60,6 @@ coefficients.
 > on-target effect. Masking exists only to keep the *activity classification* independent of
 > on-target signal.
 
-> **Cell Ranger 7.1.0 / GRCh38-2020-A** differs from the lab's dual-guide fibroblast work
-> (9.0.1 / 2024-A). Do not carry one version across to the other.
-
 ### This repository
 
 `generate_element_level_results.py`:
@@ -113,16 +110,26 @@ Pinned by SHA-256 so a future run can prove it used the same data.
 |---|---|---|
 | `merged_guides_promoters_UPSTREAM_PRIORITIZED.csv` | yes | `1ac915099d18032148841b862331ce7bb33d24bf811f9bee01424c4b534c6f0f` |
 | `Supplementary_Table1.xlsx` — 17 MB, manuscript material, distributed with the paper. Only sheet `Table S4 Guide Activity` is read. | no | `dc125f4727d650163fbfb08175d2a48ea77406787e77d3fa21a134639266a6c0` |
-| `fibroblast_CRISPRa_mean_pop.h5ad` — 1.7 GB, at `/data1/normantm/datasets/Hs27_CRISPRa/` on the MSK cluster. | no | `6e10a2605a3dbc448ac4756399adc947a493a75f8961d3793af8f851aa0411cf` |
+| `fibroblast_CRISPRa_mean_pop.h5ad` — 1.7 GB, from Zenodo (see below). | no | `6e10a2605a3dbc448ac4756399adc947a493a75f8961d3793af8f851aa0411cf` |
 
 `hit_guides_by_genes.tsv` (275 MB) is a sibling deliverable described in the file format spec, not
 an input to this script, and exceeds GitHub's 100 MB limit.
+
+### Data availability
+
+The mean-population matrix is published in the **Hs27-CRISPRa-TFs** record,
+[10.5281/zenodo.15200179](https://doi.org/10.5281/zenodo.15200179) — the copy there is byte-identical
+to the one used for the run of record (md5 `ba44c7813903bb5df900348d6b0d589a`).
+
+Other processed datasets for this screen are in the lab's Zenodo community,
+<https://zenodo.org/communities/normanlabmsk/>; raw FASTQs are at SRA
+[PRJNA1108254](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA1108254).
 
 ---
 
 ## Outputs
 
-`results/element_level_results.tsv` — one row per element × gene.
+`results/element_level_results.tsv` — one row per element × gene at `p_val_adj < 0.05`.
 
 | Column | Meaning |
 |---|---|
@@ -139,44 +146,31 @@ an input to this script, and exceeds GitHub's 100 MB limit.
 `results/element_level_results_guide_summary.tsv` — one row per element, with `n_de_genes`,
 `n_upregulated`, `n_downregulated` and the element coordinates.
 
-Two things to know when reading these files. `target_gene` is the readout and
-`intended_target_name` is the perturbation — easy to transpose. And **these are hit lists**: only
-element × gene pairs at `p_val_adj < 0.05` are written, so an element whose representative guide has
-no gene under threshold is absent rather than present with `n_de_genes = 0`. In the run of record
-that is 307 of 313 representative elements.
+`target_gene` is the readout and `intended_target_name` is the perturbation — easy to transpose.
 
 ---
 
 ## Running it
 
+Fetch the mean-population matrix from Zenodo, then run from the repository root — every other input
+and every default path is relative to it.
+
 ```bash
+conda env create -f environment.yml      # or: pip install -r requirements.txt
+
 python generate_element_level_results.py \
-  --h5ad         /data1/normantm/datasets/Hs27_CRISPRa/fibroblast_CRISPRa_mean_pop.h5ad \
+  --h5ad         fibroblast_CRISPRa_mean_pop.h5ad \
   --guide_meta   Supplementary_Table1.xlsx \
   --guide_coords merged_guides_promoters_UPSTREAM_PRIORITIZED.csv \
   --padj_thresh  0.05 \
   --out          results/element_level_results.tsv
 ```
 
-The guide summary is written alongside `--out` with `_guide_summary` appended.
+Those are also the defaults, so a bare `python generate_element_level_results.py` does the same
+thing. The guide summary is written alongside `--out` with `_guide_summary` appended.
 
-Verified under `milo-env`: Python 3.13.7, scanpy 1.11.4, anndata 0.12.2, pandas 2.3.2, numpy 2.3.3.
-The notebooks record kernel `scanpy_perturbseq`, which currently fails to import pandas on isce001.
-
----
-
-## IGVF submission mapping
-
-The output is a `tabular_file` with
-
-```
-content_type: "differential element quantifications"
-          or  "local differential expression per element"
-```
-
-`analysis_step_version` requires `lab`, `award`, `analysis_step` and at least one
-`software_versions` entry. Point `Software.source_url` at this repository and the `SoftwareVersion`
-at the release tag.
+Tested with Python 3.13.7, scanpy 1.11.4, anndata 0.12.2, pandas 2.3.2, numpy 2.3.3, scipy 1.16.2,
+h5py 3.14.0, openpyxl 3.1.5.
 
 ---
 
@@ -188,4 +182,5 @@ merged_guides_promoters_UPSTREAM_PRIORITIZED.csv     promoter windows per guide
 conversion_of_h5ad_to_tsv.ipynb                      h5ad → wide TSV conversion
 tts_guide_merge.ipynb                                TSS / promoter annotation build
 results/                                             run of record, 2026-03-03
+environment.yml / requirements.txt                   conda and pip dependencies
 ```
