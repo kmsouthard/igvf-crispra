@@ -63,13 +63,14 @@ export MULTIOME_RESULTS=/path/to/results    # default ../results
 
 ## Inputs
 
-Pinned by SHA-256.
+Pinned by SHA-256. The two matrices are the two modalities of the same experiment — singlet
+nuclei with an assigned guide, identical barcodes in both.
 
 | File | Source / version | Shipped | SHA-256 |
 |---|---|---|---|
 | `notebooks/multiome_paper_igvf_guides.csv` | this repo — 16 guides, 13 targeting + 3 NTC | yes | `beaa98924e3f78a5b2ac12bce14a5e64e746c9e7f0e1d3652b7c68cec81deb41` |
-| `gex_norm_regressed.hdf5` | this paper's GEX processing, 370 MB — not deposited | no | `2ba7f3ac585f8e2b04be423de8a8c2fd3a38a441c3f769a80061167f2865bd71` |
-| `atac_singlets_macs3_peaks.h5ad` | this paper's ATAC processing, MACS3 peaks, 1.6 GB — not deposited | no | `90dbc9f9613d09a146cbd60d4376a84debc1cf05b0478456fe750b9c265fd45c` |
+| `gex_norm_regressed.hdf5` | GEX half: 4,724 cells × 9,992 genes, z-scored, `perturbseq` CellPopulation format; obs carries `guide_identity`, QC and cell-cycle scores. 370 MB — not deposited | no | `2ba7f3ac585f8e2b04be423de8a8c2fd3a38a441c3f769a80061167f2865bd71` |
+| `atac_singlets_macs3_peaks.h5ad` | ATAC half: the same 4,724 nuclei × 250,000 500-bp bins, snapatac2 format; `uns['macs3']` holds per-guide peak calls for the 13 targets + NTC. 1.6 GB — not deposited | no | `90dbc9f9613d09a146cbd60d4376a84debc1cf05b0478456fe750b9c265fd45c` |
 | `genome.fa` | GRCh38 (`chr1` = 248,956,422), 3.0 GB | no | `fb7421217e7058120cd60a5277445198e8deef2dff1edc46cd1e98b31fe64cbb` |
 | `genes.gtf` | GENCODE v32 / Ensembl 98, GRCh38 — the annotation in Cell Ranger `GRCh38-2020-A`, 1.4 GB | no | `2dc6e7406e883a146c7cc933a2b08c8d0546e7b57e0487a93cbbc1c455868528` |
 | `epdNewHuman006_extended_promoter_regions.bed` | EPD `epdNew` Human 006, extended promoter regions, 1.7 MB | no | `b6777b8e0b78b8cc06e1f9fe710eba8e5feae661beb30904a14040832443d300` |

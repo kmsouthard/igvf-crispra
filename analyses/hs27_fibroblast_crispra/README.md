@@ -66,7 +66,7 @@ record, md5 `ba44c7813903bb5df900348d6b0d589a`). Other processed data:
 | `guide_id` | Representative guide for the element, `SYMBOL_PROTOSPACER`. |
 | `target_gene` | Ensembl ID of the **measured** gene whose expression changed. |
 | `intended_target_name` | Ensembl ID of the gene whose promoter was **perturbed**. |
-| `intended_target_chr/_start/_end` | Promoter window, UCSC-style chromosome (`chr4`). |
+| `intended_target_chr/_start/_end` | Promoter window, always 1,500 bp wide. UCSC-style chromosome (`chr4`). |
 
 `results/element_level_results_guide_summary.tsv` — one row per element, with `n_de_genes`,
 `n_upregulated`, `n_downregulated` and the element coordinates.
