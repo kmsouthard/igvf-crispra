@@ -1,6 +1,6 @@
 # Hs27 fibroblast CRISPRa Perturb-seq — element-level results
 
-Converts the screen's mean-population matrix into IGVF's element-level table. Results of record:
+Converts the screen's mean-population matrix into element-level table. Results of record:
 2026-03-03.
 
 **Paper.** Southard KM, Ardy RC, Tang A, O'Sullivan DD, Metzner E, Guruvayurappan K, Norman TM.
@@ -8,32 +8,27 @@ Converts the screen's mean-population matrix into IGVF's element-level table. Re
 Nature Genetics **57**, 2323–2334 (2025).
 [10.1038/s41588-025-02284-1](https://doi.org/10.1038/s41588-025-02284-1)
 
-## What an "element" is here
+## "element" definition
 
 A **promoter window**, keyed on
 `(intended_target_name, intended_target_chr, intended_target_start, intended_target_end)`. A gene
 with two annotated windows stays two elements — 307 elements map onto 291 genes.
 
 Each element is represented by a **single guide**, the one with the highest `de_genes_fibro` among
-its hit guides. The table is that guide's effect profile, not an aggregate.
+its hit guides.
 
 ## Upstream
 
 The input matrix comes from
 **[norman-lab-msk/TFs_CRISPRa](https://github.com/norman-lab-msk/TFs_CRISPRa)** — Cell Ranger 7.1.0
 on GRCh38-2020-A, guides at a 5-UMI threshold, per-gem-group normalization against control cells,
-then OLS regression on the guide design matrix. That repository and the paper's Methods are
-authoritative; effect scores are in control-SD units, p-values Benjamini–Hochberg corrected.
+occupancy corrected regression on the guide design matrix.
 
 The result is `fibroblast_CRISPRa_mean_pop.h5ad` (10,916 guides × 4,914 genes): `X` holds effect
 scores; layers `p`, `adj_p`, `masked` hold p-values, adjusted p-values and target-masked
 coefficients.
 
-> **This pipeline reads `X`, not `masked`** — so a guide's own target gene carries its real
-> on-target effect. Masking exists only to keep the upstream *activity classification* independent
-> of on-target signal.
-
-## What this script does
+## Processing
 
 `generate_element_level_results.py`:
 
@@ -65,9 +60,6 @@ Pinned by SHA-256, paths relative to this directory.
 | `Supplementary_Table1.xlsx` — 17 MB, distributed with the paper. Only sheet `Table S4 Guide Activity` is read. | no | `dc125f4727d650163fbfb08175d2a48ea77406787e77d3fa21a134639266a6c0` |
 | `fibroblast_CRISPRa_mean_pop.h5ad` — 1.7 GB, from Zenodo below. | no | `6e10a2605a3dbc448ac4756399adc947a493a75f8961d3793af8f851aa0411cf` |
 
-`hit_guides_by_genes.tsv` (275 MB) is a sibling deliverable, not an input, and exceeds GitHub's
-100 MB limit.
-
 **Data availability.** Mean-population matrix:
 [10.5281/zenodo.15200179](https://doi.org/10.5281/zenodo.15200179) (byte-identical to the run of
 record, md5 `ba44c7813903bb5df900348d6b0d589a`). Other processed data:
@@ -90,18 +82,12 @@ record, md5 `ba44c7813903bb5df900348d6b0d589a`). Other processed data:
 `results/element_level_results_guide_summary.tsv` — one row per element, with `n_de_genes`,
 `n_upregulated`, `n_downregulated` and the element coordinates.
 
-## Running it
+## To run
 
-Fetch the matrix from Zenodo, then run **from this directory** — all default paths are relative
-to it.
+Fetch the matrix from Zenodo, then run **from this directory**
 
 ```bash
 python generate_element_level_results.py --out results/element_level_results.tsv
 ```
-
-Every flag except `--out` is already the default; a bare run writes into the current directory
-rather than `results/`. The guide summary is written alongside `--out` with `_guide_summary`
-appended.
-
 Tested with Python 3.13.7, scanpy 1.11.4, anndata 0.12.2, pandas 2.3.2, numpy 2.3.3, scipy 1.16.2,
 h5py 3.14.0, openpyxl 3.1.5.
