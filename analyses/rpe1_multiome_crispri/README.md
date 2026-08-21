@@ -1,6 +1,6 @@
 # RPE-1 Multiome Perturb-seq (CRISPRi) — analysis code
 
-IGVF-facing analysis code for the **hTERT RPE-1 Multiome Perturb-seq** screen.
+analysis code for the **hTERT RPE-1 Multiome Perturb-seq** screen.
 
 **Paper.** Metzner E\*, Southard KM\*, Norman TM. *Multiome Perturb-seq unlocks scalable discovery
 of integrated perturbation effects on the transcriptome and epigenome.* Cell Systems **16**, 101161
@@ -29,13 +29,3 @@ screen has two modalities, and the answer sets the output schema. Document it he
 IGVF portal objects — GEX measurement set `IGVFDS4073QPQB`, ATAC measurement set `IGVFDS9292PROA`,
 guide sequencing auxiliary set `IGVFDS4833CNYU`, guide RNA sequences file `IGVFFI1270VQEU`, curated
 set `IGVFDS2221DOTB`.
-
-## What belongs here
-
-Only what the IGVF submission depends on — the code that produces the portal tables, plus its
-annotation inputs — so the `AnalysisStepVersion` has something citable to point at. The paper's full
-analysis is at the Zenodo DOI above and doesn't need duplicating.
-
-Layout mirrors the directory next door: `notebooks/`, `results/`, and this README carrying the
-method, SHA-256-pinned inputs and output schema. Repo-wide conventions are in the
-[root README](../../README.md).
