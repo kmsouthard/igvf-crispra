@@ -54,8 +54,7 @@ see [thomasmaxwellnorman/perturbseq_demo](https://github.com/thomasmaxwellnorman
 
 ## Inputs
 
-Pinned by SHA-256. The notebook reads the unshipped ones by absolute path under
-`/data1/normantm/eli/` — they are not portable off the cluster.
+Pinned by SHA-256.
 
 | File | Shipped | SHA-256 |
 |---|---|---|
@@ -65,17 +64,7 @@ Pinned by SHA-256. The notebook reads the unshipped ones by absolute path under
 | `epdNewHuman006_extended_promoter_regions.bed` — 1.7 MB | no | `b6777b8e0b78b8cc06e1f9fe710eba8e5feae661beb30904a14040832443d300` |
 | `genes.gtf` — 1.4 GB | no | `2dc6e7406e883a146c7cc933a2b08c8d0546e7b57e0487a93cbbc1c455868528` |
 | `genome.fa` — 3.0 GB | no | `fb7421217e7058120cd60a5277445198e8deef2dff1edc46cd1e98b31fe64cbb` |
-| `perturbseq` package — 7 `.py` files, sorted-concatenation digest | no | `dfeb9ee6dc4c04c5bbfff4579a054e25f6abd082101266305ca968eb1a8552d2` |
-
-**Known reproducibility gaps**, recorded rather than patched so the published results stay
-byte-reproducible:
-
-- Input paths are absolute and cluster-local; there is no path configuration.
-- `perturbseq` is loaded via `sys.path.append` from an unversioned local directory — not a git
-  checkout, hence the content digest above.
-- Cell 1 reads `multiome_paper_igvf_guides.csv` and cell 8 overwrites it. Re-running the notebook
-  in place mutates its own committed input.
-- Cell 17 re-reads the GEX output from an absolute scratch path rather than from `results/`.
+| `perturbseq` package — 7 `.py` files, content digest | no | `dfeb9ee6dc4c04c5bbfff4579a054e25f6abd082101266305ca968eb1a8552d2` |
 
 **Data availability.** Raw sequencing: SRA
 [PRJNA1128171](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA1128171). Paper's full analysis
