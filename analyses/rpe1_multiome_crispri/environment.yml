@@ -9,6 +9,7 @@ dependencies:
   - snapatac2=2.6.0
   - pyranges
   - tqdm
+  - pysam
   - numpy
   - pandas
   - scipy

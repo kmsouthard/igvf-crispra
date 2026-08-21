@@ -52,6 +52,17 @@ Columns follow the Hs27 schema — `effect_score`, `p_val`, `p_val_adj`, `guide_
 2.6.0** — other versions do not reproduce the published Table S3. `perturbseq` is not packaged;
 see [thomasmaxwellnorman/perturbseq_demo](https://github.com/thomasmaxwellnorman/perturbseq_demo).
 
+## To run
+
+From `notebooks/`. Paths default to the cluster locations used for the published run; override to
+run elsewhere.
+
+```bash
+export MULTIOME_DATA_ROOT=/path/to/data     # default /data1/normantm/eli
+export PERTURBSEQ_PATH=/path/to/perturbseq  # default $MULTIOME_DATA_ROOT/software
+export MULTIOME_RESULTS=/path/to/results    # default ../results
+```
+
 ## Inputs
 
 Pinned by SHA-256.
