@@ -1,4 +1,4 @@
-# Minimal direct requirements for generate_element_level_results.py.
+# Shared baseline requirements for the analyses in this repository.
 # numpy, scipy and h5py arrive transitively via scanpy/anndata.
 scanpy>=1.10
 pandas>=2.0

@@ -1,9 +1,11 @@
-# Large inputs — see README for provenance, paths and checksums.
-# hit_guides_by_genes.tsv is 275 MB and exceeds GitHub's 100 MB hard limit.
+# Large inputs and deliverables — see each analysis README for provenance and checksums.
+# Patterns are unanchored, so they apply inside any analyses/ subdirectory.
+
+# 275 MB, exceeds GitHub's 100 MB hard limit.
 hit_guides_by_genes.tsv
 
 # Manuscript supplementary material — required input, distributed with the paper,
-# not redistributed here. Table S4 "Guide Activity" is the sheet this pipeline reads.
+# not redistributed here. Table S4 "Guide Activity" is the sheet the CRISPRa pipeline reads.
 Supplementary_Table1.xlsx
 
 # Single-cell matrices are never committed.
@@ -11,6 +13,8 @@ Supplementary_Table1.xlsx
 *.h5
 *.hdf
 *.loom
+*.mtx
+*.mtx.gz
 
 # Notebook and Python noise
 .ipynb_checkpoints/
