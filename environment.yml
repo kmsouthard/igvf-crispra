@@ -1,6 +1,6 @@
-# Minimal conda environment for generate_element_level_results.py.
+# Shared baseline conda environment for the analyses in this repository.
 # Rename freely: `conda env create -f environment.yml -n <whatever>`.
-name: igvf-crispra
+name: igvf-perturbseq
 channels:
   - conda-forge
   - bioconda
