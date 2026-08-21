@@ -1,31 +1,38 @@
 # RPE-1 Multiome Perturb-seq (CRISPRi) — analysis code
 
-analysis code for the **hTERT RPE-1 Multiome Perturb-seq** screen.
+**Paper.** Metzner E, Southard KM, Norman TM (equal contribution).
+*Multiome Perturb-seq unlocks scalable discovery of integrated perturbation effects on the
+transcriptome and epigenome.* Cell Systems **16**, 101161 (2025).
+[10.1016/j.cels.2024.12.002](https://doi.org/10.1016/j.cels.2024.12.002)
 
-**Paper.** Metzner E\*, Southard KM\*, Norman TM. *Multiome Perturb-seq unlocks scalable discovery
-of integrated perturbation effects on the transcriptome and epigenome.* Cell Systems **16**, 101161
-(2025). [10.1016/j.cels.2024.12.002](https://doi.org/10.1016/j.cels.2024.12.002) (\*equal
-contribution)
+> **Scaffold — no code added yet.** Only what the IGVF submission depends on belongs here; the
+> paper's full analysis is at the Zenodo DOI below.
 
-> **Status: scaffold.** No code added yet.
+## Screen
 
-## The screen
+CRISPRi (dCas9-ZIM3) in hTERT RPE-1, gene expression and chromatin accessibility from the same
+nuclei via 10x Multiome. 13 chromatin remodelers — SMARCE1, SMARCB1, ARID1A, SMARCA4, DPF2,
+SMARCC1, SMARCC2, EP400, ACTL6A, DMAP1, SUZ12, EZH2, YY1 — plus 3 non-targeting controls.
 
-CRISPRi (dCas9-ZIM3) in hTERT RPE-1, reading out gene expression and chromatin accessibility from
-the same nuclei via 10x Multiome. **13 chromatin remodelers** — SMARCE1, SMARCB1, ARID1A, SMARCA4,
-DPF2, SMARCC1, SMARCC2, EP400, ACTL6A, DMAP1, SUZ12, EZH2, YY1 — plus 3 non-targeting controls.
+## "element" definition
 
-**Open question, blocks everything downstream:** how an IGVF "element" is defined on the ATAC side —
-peak, or perturbed promoter. Unlike the [Hs27 CRISPRa analysis](../hs27_fibroblast_crispra/), this
-screen has two modalities, and the answer sets the output schema. Document it here once settled.
+**Unsettled — peak, or perturbed promoter.** Two modalities, unlike the
+[Hs27 CRISPRa analysis](../hs27_fibroblast_crispra/) where an element is a promoter window. Sets
+the output schema, so it blocks results.
 
-## Data availability
+## Inputs
 
 | Resource | Identifier |
 |---|---|
 | Raw sequencing | SRA [PRJNA1128171](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA1128171) |
-| Paper's full analysis code | [10.5281/zenodo.14217682](https://doi.org/10.5281/zenodo.14217682) |
+| Paper's analysis code | [10.5281/zenodo.14217682](https://doi.org/10.5281/zenodo.14217682) |
 
-IGVF portal objects — GEX measurement set `IGVFDS4073QPQB`, ATAC measurement set `IGVFDS9292PROA`,
-guide sequencing auxiliary set `IGVFDS4833CNYU`, guide RNA sequences file `IGVFFI1270VQEU`, curated
-set `IGVFDS2221DOTB`.
+## IGVF portal objects
+
+| Object | Accession |
+|---|---|
+| GEX measurement set | `IGVFDS4073QPQB` |
+| ATAC measurement set | `IGVFDS9292PROA` |
+| Guide sequencing auxiliary set | `IGVFDS4833CNYU` |
+| Guide RNA sequences file | `IGVFFI1270VQEU` |
+| Curated set | `IGVFDS2221DOTB` |
