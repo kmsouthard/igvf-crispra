@@ -39,17 +39,6 @@ coefficients.
 4. Melts effect scores and both p-value layers to one row per element × gene, maps symbols to
    unversioned Ensembl IDs, filters to `p_val_adj < 0.05`.
 
-| Stage | Count |
-|---|---|
-| Guides in the mean-pop h5ad | 10,916 |
-| Classified in Table S4 | 10,707 |
-| `active_fibro` / `expanded_active_fibro` (disjoint) | 659 / 106 |
-| Hit guides after seed / bad-seed filter | 626 |
-| Distinct promoter elements | 313 |
-| Elements present in output | 307 |
-| Distinct target genes | 291 |
-| Element × gene rows written | 31,047 |
-
 ## Inputs
 
 Pinned by SHA-256, paths relative to this directory.
