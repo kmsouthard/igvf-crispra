@@ -1,0 +1,16 @@
+# Additions on top of the repository baseline (../../environment.yml).
+name: igvf-perturbseq-multiome
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  # snapatac2 MUST be 2.6.0 — other versions give different results than published Table S3.
+  - snapatac2=2.6.0
+  - pyranges
+  - tqdm
+  - numpy
+  - pandas
+  - scipy
+  # perturbseq is not on PyPI/conda; the notebook loads it from a local checkout.
+  # Source: https://github.com/thomasmaxwellnorman/perturbseq_demo
