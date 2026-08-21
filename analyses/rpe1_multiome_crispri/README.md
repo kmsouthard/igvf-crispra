@@ -5,9 +5,6 @@
 transcriptome and epigenome.* Cell Systems **16**, 101161 (2025).
 [10.1016/j.cels.2024.12.002](https://doi.org/10.1016/j.cels.2024.12.002)
 
-> Only what the IGVF submission depends on belongs here; the paper's full analysis is at the
-> Zenodo DOI below.
-
 ## Screen
 
 CRISPRi (dCas9-ZIM3) in hTERT RPE-1, gene expression and chromatin accessibility from the same
