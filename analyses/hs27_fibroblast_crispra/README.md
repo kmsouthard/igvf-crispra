@@ -3,7 +3,7 @@
 Converts the screen's mean-population matrix into element-level table. Results of record:
 2026-03-03.
 
-**Paper.** Southard KM, Ardy RC, Tang A, O'Sullivan DD, Metzner E, Guruvayurappan K, Norman TM.
+**Paper.** Southard KM*, Ardy RC*, Tang A, O'Sullivan DD, Metzner E, Guruvayurappan K, Norman TM. (*equal contribution)
 *Comprehensive transcription factor perturbations recapitulate fibroblast transcriptional states.*
 Nature Genetics **57**, 2323–2334 (2025).
 [10.1038/s41588-025-02284-1](https://doi.org/10.1038/s41588-025-02284-1)
