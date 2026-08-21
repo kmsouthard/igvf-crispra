@@ -21,8 +21,9 @@ promoter window to the guide.
 `notebooks/multiome_data_organization.ipynb`:
 
 1. Maps each guide protospacer to genomic coordinates, then to its nearest EPD promoter window.
-2. **GEX** — `ks_de` against NTC cells on the normalized population; effect score is the
-   mean-population z-score, filtered to `q < 0.1`, symbols mapped to Ensembl IDs via the GTF.
+2. **GEX** — `ks_de` against NTC cells on the normalized population, with Benjamini–Yekutieli
+   control; effect score is the mean-population z-score, filtered to `q < 0.1`, symbols mapped to
+   Ensembl IDs via the GTF.
 3. **ATAC** — MACS3 peaks merged, paired-insertion peak matrix, Mann–Whitney U per guide against
    NTC with Benjamini–Hochberg control; effect score is log2 fold-change, filtered to `q < 0.1`.
 
@@ -38,6 +39,10 @@ Run of record, 2026-08-21, in `results/`.
 Columns — `effect_score`, `p_val`, `p_val_adj`, `guide_id`,
 `intended_target_name`, `intended_target_chr/_start/_end` — plus `target_gene` (GEX) or
 `chr/start/end` of the peak (ATAC).
+
+`effect_score` is a different quantity in each: GEX is mean z-scored expression over the guide's
+cells, in SD units; ATAC is log2 fold-change of mean accessibility against NTC, with a `1e-3`
+pseudocount.
 
 ## Environment
 
