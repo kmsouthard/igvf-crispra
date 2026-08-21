@@ -1,6 +1,6 @@
 # RPE-1 Multiome Perturb-seq (CRISPRi) — analysis code
 
-**Paper.** Metzner E, Southard KM, Norman TM (equal contribution).
+**Paper.** Metzner E*, Southard KM*, Norman TM (*equal contribution).
 *Multiome Perturb-seq unlocks scalable discovery of integrated perturbation effects on the
 transcriptome and epigenome.* Cell Systems **16**, 101161 (2025).
 [10.1016/j.cels.2024.12.002](https://doi.org/10.1016/j.cels.2024.12.002)
